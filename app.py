@@ -2,13 +2,14 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-@app.route("/")
-def hello_world():
-    name = request.args.get("user")
-    password = request.args.get("password")
-    if name ==None:
+@app.route("/", methods=["GET", "POST"])
+def login():
+    if request.method == "GET":
         return render_template("index.html")
-    elif password =="123":
-        return "Hello " + name
     else:
-        return "wrong password"
+        name = request.form["user"]
+        password = request.form["password"]
+        if password == "123":
+            return "hello " + name 
+        else:
+            return "wrong password"
